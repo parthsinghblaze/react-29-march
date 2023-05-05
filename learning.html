@@ -8,14 +8,27 @@
 </head>
 <body>
     <script>
-        let obj = {
-            firstName: "parth",
-            lastName: "singh"
+
+        function newData() {
+            return ["apple", "Banana"]
         }
 
-        const { firstName } = obj 
+        const [fruit1, fruit2] = newData()
+        console.log(fruit1, fruit2);
+        // const array = [1,2,3,4,5,6,7,8];
+        // const [a,b,c,d] = array;
+        // console.log(a,b,c,d)
+        
+        // console.log(array[0], array[1], array[2], array[3])
 
-        console.log(firstName);
+        // let obj = {
+        //     firstName: "parth",
+        //     lastName: "singh"
+        // }
+
+        // const { firstName } = obj 
+
+        // console.log(firstName);
 
     </script>
 </body>
