@@ -1,35 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
+      let obj1 = {
+        firstName: "Rahul",
+        lastName: "Prajapati",
+        age: 21,
+      };
 
-        function newData() {
-            return ["apple", "Banana"]
-        }
+      let obj2 = {
+        ...obj1,
+        address: "Daman",
+        age: 30
+      }
 
-        const [fruit1, fruit2] = newData()
-        console.log(fruit1, fruit2);
-        // const array = [1,2,3,4,5,6,7,8];
-        // const [a,b,c,d] = array;
-        // console.log(a,b,c,d)
-        
-        // console.log(array[0], array[1], array[2], array[3])
+      console.log(obj2);
 
-        // let obj = {
-        //     firstName: "parth",
-        //     lastName: "singh"
-        // }
+      // const array1 = [1,2,3,4,5];
+      // const array2 = [6,7,8,9,10];
 
-        // const { firstName } = obj 
+      // const array3 = [...array1, ...array2];
+      // console.log(array3);
 
-        // console.log(firstName);
+      // function newData() {
+      //     return ["apple", "Banana"]
+      // }
 
+      // const [fruit1, fruit2] = newData()
+      // console.log(fruit1, fruit2);
+      // const array = [1,2,3,4,5,6,7,8];
+      // const [a,b,c,d] = array;
+      // console.log(a,b,c,d)
+
+      // console.log(array[0], array[1], array[2], array[3])
+
+      // let obj = {
+      //     firstName: "parth",
+      //     lastName: "singh"
+      // }
+
+      // const { firstName } = obj
+
+      // console.log(firstName);
     </script>
-</body>
+  </body>
 </html>
