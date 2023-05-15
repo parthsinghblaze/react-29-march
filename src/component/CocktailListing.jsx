@@ -3,9 +3,12 @@ import React, { useEffect, useState } from "react";
 function CocktailListing() {
   const [drinks, setDrinks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchValue, setSearchValue] = useState("");
 
   function fetchCocktail() {
-    fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=`)
+    fetch(
+      `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchValue}`
+    )
       .then((resp) => resp.json())
       .then((data) => {
         setDrinks(data.drinks);
@@ -17,11 +20,15 @@ function CocktailListing() {
     fetchCocktail();
   }, []);
 
+  function handleSearch() {
+    fetchCocktail();
+  }
+
   if (isLoading) {
     return (
       <div className="container">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
         </div>
       </div>
     );
@@ -30,13 +37,23 @@ function CocktailListing() {
   return (
     <div className="container py-5">
       <h4>Cocktail </h4>
+      <input
+        value={searchValue}
+        type="text"
+        placeholder="Search your drink..."
+        className="form-control"
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
+      <button onClick={handleSearch} className="btn btn-primary">
+        Search
+      </button>
       <hr />
       <div className="row">
         {drinks.map((item) => {
-          const { strDrink, strDrinkThumb, strInstructions } = item;
+          const { strDrink, strDrinkThumb, strInstructions, idDrink } = item;
 
           return (
-            <div className=" col-6 col-md-4 mb-4">
+            <div key={idDrink} className=" col-6 col-md-4 mb-4">
               <div className="card">
                 <img src={strDrinkThumb} alt="" />
                 <div className="card-body">
