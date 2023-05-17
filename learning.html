@@ -7,13 +7,90 @@
     <title>Document</title>
 </head>
 <body>
+    <input type="text" > <button onclick="submitData()">Submit</button>
+    <h1></h1>
     <script>
+
+        // LOCAL STORAGE ======================
+
+        const input = document.querySelector("input")
+        const h1Tag = document.querySelector("h1");
+        function submitData() {
+            const inputValue = input.value
+            h1Tag.innerHTML = inputValue;
+            localStorage.setItem("username", inputValue);
+        }
+
+        function getLocalStorageData() {
+            const username = localStorage.getItem("username")
+            if(username) {
+                h1Tag.innerHTML = username
+            }
+            else {
+                h1Tag.innerHTML = "Please let your name"
+            }
+        }
+
+        getLocalStorageData()
+
+        const objData = {
+            id: 1,
+            firstName: "hey",
+            lastName: "Bye"
+        }
+
+        // to convet object to json string you have to use JSON.stringify
+        localStorage.setItem('profileDetail', JSON.stringify(objData));
+        const profileDetail = localStorage.getItem('profileDetail')
+
+        // to convert string to object you need JSON.parse
+        console.log( JSON.parse(profileDetail));
+
+        //  OBJECT LEARNING ======================
+
+        // const newData = { ...objData, firstName: "Bye", lastName: "hey" }
+
+        // console.log(newData);
+        // const array = [
+        //     {
+        //         id: 1,
+        //         name: "parth"
+        //     },
+        //     {
+        //         id: 2,
+        //         name: "Sidd"
+        //     },
+        //     {
+        //         id: 3,
+        //         name: "palak"
+        //     }
+        // ]
+
+        // let editId = 2;
+
+        // const editArray = array.map((item) => {
+        //     if(item.id === editId) {
+        //         return {...item, name: "siddharth"}
+        //     } else {
+        //         return item 
+        //     }
+        // })
+
+        // console.log(editArray)
+
+    //     const obj = {
+    //         firstName: "parth",
+    //         lastName: "Singh"
+    //     }
+
+    //     const { lastName } = obj;
+    //     console.log(lastName);
      
-     const array = [1,2,3,4,5,6,7,8,9,10];
-     const deleteArray = 3;
+    //  const array = [1,2,3,4,5,6,7,8,9,10];
+    //  const deleteArray = 3;
      
-     const filterArray = array.filter((item) => item !== deleteArray)
-        console.log(filterArray);
+    //  const filterArray = array.filter((item) => item !== deleteArray)
+    //     console.log(filterArray);
     </script>
 </body>
 </html>

@@ -1,10 +1,22 @@
 import { useState } from "react";
 
+function getLocalStorageData() {
+  const data = localStorage.getItem("data");
+
+  if (data) {
+    return JSON.parse(localStorage.getItem("data"));
+  } else {
+    return [];
+  }
+}
+
 function App() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState(getLocalStorageData());
+  const [isEdit, setIsEdit] = useState(false);
+  const [editId, setEditId] = useState(null);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -16,6 +28,7 @@ function App() {
     };
 
     setTableData([...tableData, formValue]);
+    localStorage.setItem("data", JSON.stringify([...tableData, formValue]));
     setFirstName("");
     setLastName("");
     setEmail("");
@@ -24,6 +37,33 @@ function App() {
   function handleDelete(id) {
     const updatedData = tableData.filter((item) => item.id !== id);
     setTableData(updatedData);
+  }
+
+  function addToEditStage(item) {
+    const { firstName, lastName, email, id } = item;
+    setFirstName(firstName);
+    setLastName(lastName);
+    setEmail(email);
+    setIsEdit(true);
+    setEditId(id);
+  }
+
+  function handleEdit(e) {
+    e.preventDefault();
+    const editTableData = tableData.map((item) => {
+      if (item.id === editId) {
+        return { ...item, firstName, lastName, email };
+      } else {
+        return item;
+      }
+    });
+
+    setTableData(editTableData);
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setIsEdit(false);
+    setEditId(null);
   }
 
   return (
@@ -64,9 +104,21 @@ function App() {
                 className="form-control"
               />
             </div>
-            <button className="btn btn-light mt-3 w-100" onClick={handleSubmit}>
-              Submit
-            </button>
+            {isEdit ? (
+              <button
+                className="btn btn-warning mt-3 w-100"
+                onClick={handleEdit}
+              >
+                Update
+              </button>
+            ) : (
+              <button
+                className="btn btn-light mt-3 w-100"
+                onClick={handleSubmit}
+              >
+                Submit
+              </button>
+            )}
           </form>
         </div>
         <div
@@ -99,7 +151,12 @@ function App() {
                       >
                         Delete
                       </button>
-                      <button className="btn btn-warning">Edit</button>
+                      <button
+                        className="btn btn-warning"
+                        onClick={() => addToEditStage(item)}
+                      >
+                        Edit
+                      </button>
                     </td>
                   </tr>
                 );
