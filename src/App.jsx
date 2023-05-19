@@ -36,6 +36,7 @@ function App() {
 
   function handleDelete(id) {
     const updatedData = tableData.filter((item) => item.id !== id);
+    localStorage.setItem("data", JSON.stringify(updatedData));
     setTableData(updatedData);
   }
 
@@ -59,6 +60,7 @@ function App() {
     });
 
     setTableData(editTableData);
+    localStorage.setItem("data", JSON.stringify(editTableData));
     setFirstName("");
     setLastName("");
     setEmail("");
@@ -122,7 +124,7 @@ function App() {
           </form>
         </div>
         <div
-          className="col-md-6 offset-md-3 mt-5"
+          className="col-md-8 offset-md-2 mt-5"
           style={{ marginBottom: "100px" }}
         >
           <table className="table table-primary">
@@ -152,7 +154,7 @@ function App() {
                         Delete
                       </button>
                       <button
-                        className="btn btn-warning"
+                        className="btn btn-warning ms-3"
                         onClick={() => addToEditStage(item)}
                       >
                         Edit
