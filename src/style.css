@@ -7,3 +7,9 @@
 .text-white{
     color: white;
 }
+
+.mySwiper img{
+    width: 100%;
+    height: 40vw;
+    object-fit: cover;
+}

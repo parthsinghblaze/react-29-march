@@ -7,16 +7,38 @@
     <title>Document</title>
 </head>
 <body>
+
     <script>
-        let obj = {
-            firstName: "parth",
-            lastName: "singh"
-        }
+        const findId = 1;
+       const list = [
+    {
+        id: 1,
+        name: "React",
+        desp: "React is a framework",
+        price: 299
+    },
+    {
+        id: 2,
+        name: "Angular",
+        desp: "React is a framework",
+        price: 299
+    },{
+        id: 3,
+        name: "Vue",
+        desp: "React is a framework",
+        price: 299
+    },{
+        id: 4,
+        name: "Next",
+        desp: "React is a framework",
+        price: 299
+    },
+]
 
-        const { firstName } = obj 
-
-        console.log(firstName);
-
+console.log(list);
+const findElement = list.find(item => item.id === findId)
+    console.log(findElement)
     </script>
+    
 </body>
 </html>
