@@ -5,6 +5,8 @@ import Support from "./pages/Support"
 import Nav from "./components/Nav"
 import Courses from "./pages/Courses"
 import CourseDetail from "./pages/CourseDetail"
+import Cocktail from "./pages/Cocktail"
+import CocktailDetail from "./pages/CocktailDetail"
 
 function App() {
     return (
@@ -16,6 +18,8 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/course/:id" element={<CourseDetail />} />
+            <Route path="/cocktails" element={<Cocktail />} />
+            <Route path="/cocktail/:id" element={<CocktailDetail />} />
         </Routes>
         </>
 
