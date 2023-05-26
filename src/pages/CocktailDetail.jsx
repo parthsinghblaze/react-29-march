@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 function CocktailDetail() {
   const { id } = useParams();
   const [drinkDetail, setDrinkDetail] = useState({});
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  console.log(navigate);
 
   function fetchData() {
     setLoading(true);
@@ -26,6 +29,12 @@ function CocktailDetail() {
 
   return (
     <div className="container">
+      {/* <Link to="/cocktails" className="btn btn-primary">
+        Back
+      </Link> */}
+      <button className="btn btn-primary" onClick={() => navigate("/courses")}>
+        Back
+      </button>
       <h4>Detail: {id}</h4>
       <div className="row">
         <div className="col-md-4">
