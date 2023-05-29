@@ -1,7 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { AppDetails } from "../App";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import LoginButton from "./LoginButton";
 
 function Nav() {
+  const { login, setLogin, cart } = useContext(AppDetails);
+
+  function logOut() {
+    setLogin(false);
+    localStorage.removeItem("login");
+  }
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
@@ -19,34 +28,58 @@ function Nav() {
         >
           <span className="navbar-toggler-icon" />
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div
+          className="collapse navbar-collapse d-flex justify-content-between"
+          id="navbarNav"
+        >
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link to="/" className="nav-link active" aria-current="page">
+              <NavLink to="/" className="nav-link" aria-current="page">
                 Home
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link to="/courses" className="nav-link">
+              <NavLink to="/courses" className="nav-link">
                 Courses
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link to="/cocktails" className="nav-link">
+              <NavLink to="/cocktails" className="nav-link">
                 Cocktail
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link to="/support" className="nav-link">
+              <NavLink to="/support" className="nav-link">
                 Support
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link to="/about" className="nav-link">
+              <NavLink to="/about" className="nav-link">
                 About
-              </Link>
+              </NavLink>
             </li>
           </ul>
+          <div>
+            <button
+              type="button"
+              className="btn btn-dark btn-sm me-3 position-relative"
+            >
+              <AiOutlineShoppingCart />
+              <span
+                className="position-absolute top-0 start-100 translate-middle bg-danger border border-light rounded-circle d-flex justify-content-center align-items-center"
+                style={{ width: "26px", height: "26px" }}
+              >
+                {cart.length}
+              </span>
+            </button>
+            {login ? (
+              <button className="btn btn-sm btn-danger" onClick={logOut}>
+                Logout
+              </button>
+            ) : (
+              <LoginButton />
+            )}
+          </div>
         </div>
       </div>
     </nav>

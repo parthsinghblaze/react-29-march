@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Container from "../components/Container";
 
 function Cocktail() {
   const [drinks, setDrinks] = useState([]);
@@ -15,7 +16,7 @@ function Cocktail() {
   }, []);
 
   return (
-    <div className="container">
+    <Container>
       <h1>Cocktail.</h1>
       <div className="row">
         {drinks.map((item) => {
@@ -35,7 +36,7 @@ function Cocktail() {
           );
         })}
       </div>
-    </div>
+    </Container>
   );
 }
 

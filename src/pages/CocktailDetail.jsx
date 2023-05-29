@@ -32,7 +32,7 @@ function CocktailDetail() {
       {/* <Link to="/cocktails" className="btn btn-primary">
         Back
       </Link> */}
-      <button className="btn btn-primary" onClick={() => navigate("/courses")}>
+      <button className="btn btn-primary" onClick={() => navigate(-1)}>
         Back
       </button>
       <h4>Detail: {id}</h4>

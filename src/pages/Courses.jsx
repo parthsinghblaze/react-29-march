@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import { courseList } from "../courseList";
 import { Link, useNavigate } from "react-router-dom";
+import Container from "../components/Container";
+import { AppDetails } from "../App";
 
 function Courses() {
   const navigate = useNavigate();
 
+  const { cart, setCart, courseListData, setCourseLisData } =
+    useContext(AppDetails);
+
+  function addToCart(item) {
+    const data = courseListData.map((singleItem) => {
+      if (singleItem.id === item.id) {
+        return { ...singleItem, cart: true };
+      } else {
+        return singleItem;
+      }
+    });
+
+    setCourseLisData(data);
+    setCart([...cart, item]);
+  }
+
   return (
-    <div className="container">
+    <Container>
       <h3>Courses</h3>
       <div className="row">
-        {courseList.map((item) => {
-          const { name, id } = item;
+        {courseListData.map((item) => {
+          const { name, id, cart } = item;
           return (
             <div className="col-md-4  mb-4" key={id}>
               <div className="card shadow">
@@ -27,13 +45,21 @@ function Courses() {
                   >
                     View Course
                   </button>
+                  {cart ? null : (
+                    <button
+                      className="btn-sm mt-3 btn btn-danger ms-2"
+                      onClick={() => addToCart(item)}
+                    >
+                      Add To cart
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
           );
         })}
       </div>
-    </div>
+    </Container>
   );
 }
 
