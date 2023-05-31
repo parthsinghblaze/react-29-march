@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { AppDetails } from "../App";
 import Container from "./Container";
 import LoginButton from "./LoginButton";
+import { Navigate } from "react-router-dom";
 
 function PrivateRoute({ children }) {
   const { login, setLogin } = useContext(AppDetails);
@@ -10,12 +11,7 @@ function PrivateRoute({ children }) {
     return children;
   }
 
-  return (
-    <Container>
-      <h5>Please Login</h5>
-      <LoginButton />
-    </Container>
-  );
+  return <Navigate to="/login" />;
 }
 
 export default PrivateRoute;

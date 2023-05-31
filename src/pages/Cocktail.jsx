@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Container from "../components/Container";
 
 function Cocktail() {
   const [drinks, setDrinks] = useState([]);

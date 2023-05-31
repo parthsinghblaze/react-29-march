@@ -1,16 +1,24 @@
 import React, { useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AppDetails } from "../App";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import LoginButton from "./LoginButton";
 
 function Nav() {
   const { login, setLogin, cart } = useContext(AppDetails);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   function logOut() {
     setLogin(false);
     localStorage.removeItem("login");
+    navigate("/login");
   }
+
+  if (pathname === "/login") {
+    return null;
+  }
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">

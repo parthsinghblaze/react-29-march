@@ -10,6 +10,7 @@ import CocktailDetail from "./pages/CocktailDetail"
 import { createContext, useState } from "react"
 import PrivateRoute from "./components/PrivateRoute"
 import { courseList } from "./courseList"
+import Login from "./pages/Login"
 
 export const AppDetails = createContext()
 
@@ -34,12 +35,13 @@ function App() {
         <Nav />
         <Routes>
             <Route path="/" element={ <Home /> } />
-            <Route path="/about" element={  <About />} />
+            <Route path="/about" element={ <About />} />
             <Route path="/courses" element={ <PrivateRoute><Courses /></PrivateRoute> } />
             <Route path="/course/:id" element={  <PrivateRoute> <CourseDetail /> </PrivateRoute>} />
             <Route path="/support" element={<Support />} />
             <Route path="/cocktails" element={<PrivateRoute><Cocktail /></PrivateRoute>} />
             <Route path="/cocktail/:id" element={ <PrivateRoute><CocktailDetail /></PrivateRoute> } />
+            <Route path="/login" element={<Login />} />
         </Routes>
         </AppDetails.Provider>
         </>
