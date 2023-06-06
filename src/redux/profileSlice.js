@@ -6,17 +6,14 @@ const profileSlice = createSlice({
     name: 'profile',
     initialState: {
         name: "Nikhil",
-        address: "Surat",
-        image: img1
     },
     reducers: {
-        changeName: (state) => {
-            state.name = "Suraj"
-            state.image = img2
+        changeName: (state, action) => {
+            state.name = action.payload
         }
     }
 })
 
-export const { changeName } = profileSlice.actions
+export const { changeName, removeImage } = profileSlice.actions
 
 export default profileSlice.reducer
