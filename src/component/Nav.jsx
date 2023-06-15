@@ -1,7 +1,13 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 function Nav() {
+  const data = useLocation();
+  console.log("data", data);
+  if (data.pathname === "/login") {
+    return null;
+  }
+
   return (
     <div className="container-fluid bg-success">
       <div className="container">
