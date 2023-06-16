@@ -3,7 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 
 function Nav() {
   const data = useLocation();
-  console.log("data", data);
+
   if (data.pathname === "/login") {
     return null;
   }
