@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { login } from "../redux/authSlice";
 import { Form, Formik, Field, ErrorMessage } from "formik";
@@ -10,6 +10,8 @@ function Login() {
   // const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { loading, errorMessage } = useSelector((state) => state.auth);
 
   const initialValues = {
     email: "",
@@ -42,6 +44,7 @@ function Login() {
     <div className="container" style={{ padding: "100px 0" }}>
       <div className="row">
         <div className="col-md-6 offset-md-3 shadow p-3">
+          <h6>{errorMessage}</h6>
           <Formik
             validationSchema={validationSchema}
             initialValues={initialValues}
@@ -77,7 +80,7 @@ function Login() {
                     />
                   </div>
                   <button type="submit" className="btn btn-success">
-                    Submit
+                    {loading ? "Loging..." : "Submit"}
                   </button>
                 </Form>
               );
