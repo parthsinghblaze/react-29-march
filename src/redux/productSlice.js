@@ -10,15 +10,43 @@ export const fetchProduct = createAsyncThunk('fetchProducts', async () => {
     }
 })
 
+export const addProduct = createAsyncThunk('addProduct', async ({formValue, handleClose}, {dispatch}) => {
+    dispatch(startAddLoading());
+    try {
+        const response = await axios.post('http://localhost:8000/product', formValue)
+        if(response.status === 200) {
+            handleClose();
+            dispatch(fetchProduct());
+        }
+        dispatch(stopAddLoading());
+    } catch (error) {
+        dispatch(stopAddLoading());
+        dispatch(addErrorMessage(error.response.data.message));
+    }
+})
+
 const productSlice = createSlice({
     name: "product",
     initialState: {
         productList: [],
-        loading: true 
+        loading: true,
+        addProductLoading: false,
+        error: ""
     },
     reducers: {
-        
-    },
+        startAddLoading: (state, action) => {
+            state.addProductLoading = true
+        },
+        stopAddLoading: (state, action) => {
+            state.addProductLoading = false
+        },
+        addErrorMessage: (state, action) => {
+            state.error = action.payload
+        },
+        emptyErrorMessage: (state, action) => {
+            state.error = ""
+        }
+    }, 
     extraReducers: {
         [fetchProduct.pending]: (state, action) => {
             state.loading = true 
@@ -32,5 +60,7 @@ const productSlice = createSlice({
         }
     }
 })
+
+export const {startAddLoading, stopAddLoading, addErrorMessage, emptyErrorMessage} = productSlice.actions;
 
 export default productSlice.reducer

@@ -1,11 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct } from "../redux/productSlice";
+import { emptyErrorMessage, fetchProduct } from "../redux/productSlice";
+import { IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import AddProductModel from "../component/AddProductModel";
 
 function Products() {
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
 
   const { loading, productList } = useSelector((state) => state.product);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    dispatch(emptyErrorMessage());
+  };
 
   useEffect(() => {
     dispatch(fetchProduct());
@@ -17,9 +32,23 @@ function Products() {
 
   return (
     <div className="container py-5">
+      {/* ================== MODEL ============================= */}
+
+      <AddProductModel open={open} handleClose={handleClose} />
+
       <div className="text-end mb-5">
-        <button className="btn btn-primary btn-sm">Add Product</button>
+        <Button
+          variant="contained"
+          size="medium"
+          className="text-capitalize"
+          onClick={handleClickOpen}
+        >
+          Add Product
+        </Button>
+        {/* <button className="btn btn-primary btn-sm">Add Product</button> */}
       </div>
+
+      {/* ===================== TABLE =============================== */}
       <table className="table">
         <thead>
           <tr>
@@ -43,10 +72,12 @@ function Products() {
                   <td>{price}</td>
                   <td>{qty}</td>
                   <td>
-                    <button className="btn btn-sm btn-danger me-3">
-                      Delete
-                    </button>
-                    <button className="btn btn-sm btn-warning">Edit</button>
+                    <IconButton color="error">
+                      <DeleteIcon />
+                    </IconButton>
+                    <IconButton color="warning">
+                      <EditIcon />
+                    </IconButton>
                   </td>
                 </tr>
               );
