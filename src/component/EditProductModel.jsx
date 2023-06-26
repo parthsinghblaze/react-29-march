@@ -6,17 +6,12 @@ import { Form, Formik, Field, ErrorMessage } from "formik";
 import DialogTitle from "@mui/material/DialogTitle";
 import { object, string, number } from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct } from "../redux/productSlice";
+import { addProduct, updateProduct } from "../redux/productSlice";
 
-function AddProductModel({ open, handleClose }) {
+function EditProductModel({ editOpen, editHandleClose, editValue }) {
   const dispatch = useDispatch();
   const { addProductLoading, error } = useSelector((state) => state.product);
-  const initialValues = {
-    name: "",
-    price: 0,
-    category: "",
-    qty: 0,
-  };
+  const initialValues = editValue;
 
   const validationSchema = object({
     name: string().required("Name is required."),
@@ -26,12 +21,14 @@ function AddProductModel({ open, handleClose }) {
   });
 
   function formSubmit(value) {
-    dispatch(addProduct({ formValue: value, handleClose: handleClose }));
+    dispatch(
+      updateProduct({ formValue: value, editHandleClose: editHandleClose })
+    );
   }
 
   return (
-    <Dialog maxWidth="sm" fullWidth open={open} onClose={handleClose}>
-      <DialogTitle>Add your product</DialogTitle>
+    <Dialog maxWidth="sm" fullWidth open={editOpen} onClose={editHandleClose}>
+      <DialogTitle>Update your product</DialogTitle>
       {error}
       <DialogContent className="p-3">
         <Formik
@@ -97,7 +94,7 @@ function AddProductModel({ open, handleClose }) {
                   />
                 </div>
                 <button type="submit" className="btn btn-success">
-                  {addProductLoading ? "Adding..." : "Submit"}
+                  {addProductLoading ? "Adding..." : "Update"}
                 </button>
               </Form>
             );
@@ -108,4 +105,4 @@ function AddProductModel({ open, handleClose }) {
   );
 }
 
-export default AddProductModel;
+export default EditProductModel;

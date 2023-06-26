@@ -1,20 +1,36 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { emptyErrorMessage, fetchProduct } from "../redux/productSlice";
+import {
+  deleteProduct,
+  emptyErrorMessage,
+  fetchProduct,
+  searchProduct,
+} from "../redux/productSlice";
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import AddProductModel from "../component/AddProductModel";
+import EditProductModel from "../component/EditProductModel";
 
 function Products() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [editValue, setEditValue] = useState({});
+  const [searchText, setSearchText] = useState("");
 
-  const { loading, productList } = useSelector((state) => state.product);
+  const { loading, productList, filterProductList } = useSelector(
+    (state) => state.product
+  );
 
   const handleClickOpen = () => {
     setOpen(true);
+  };
+
+  const handleEditOpen = (values) => {
+    setEditValue(values);
+    setEditOpen(true);
   };
 
   const handleClose = () => {
@@ -22,9 +38,19 @@ function Products() {
     dispatch(emptyErrorMessage());
   };
 
+  const editHandleClose = () => {
+    setEditOpen(false);
+  };
+
   useEffect(() => {
     dispatch(fetchProduct());
   }, []);
+
+  useEffect(() => {
+    if (searchText) {
+      dispatch(searchProduct(searchText));
+    }
+  }, [searchText]);
 
   if (loading) {
     return <h1>Loading...</h1>;
@@ -36,7 +62,21 @@ function Products() {
 
       <AddProductModel open={open} handleClose={handleClose} />
 
-      <div className="text-end mb-5">
+      {/* ==================== EDIT MODEL ======================= */}
+      <EditProductModel
+        editOpen={editOpen}
+        editHandleClose={editHandleClose}
+        editValue={editValue}
+      />
+
+      <div className="mb-5 d-flex justify-content-between gap-5">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="form-control w-25"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
         <Button
           variant="contained"
           size="medium"
@@ -49,6 +89,7 @@ function Products() {
       </div>
 
       {/* ===================== TABLE =============================== */}
+
       <table className="table">
         <thead>
           <tr>
@@ -61,9 +102,9 @@ function Products() {
           </tr>
         </thead>
         <tbody>
-          {productList &&
-            productList.map((item, index) => {
-              const { name, qty, price, category } = item;
+          {filterProductList &&
+            filterProductList.map((item, index) => {
+              const { _id, name, qty, price, category } = item;
               return (
                 <tr>
                   <td>{index + 1}</td>
@@ -72,10 +113,16 @@ function Products() {
                   <td>{price}</td>
                   <td>{qty}</td>
                   <td>
-                    <IconButton color="error">
+                    <IconButton
+                      color="error"
+                      onClick={() => dispatch(deleteProduct({ id: _id }))}
+                    >
                       <DeleteIcon />
                     </IconButton>
-                    <IconButton color="warning">
+                    <IconButton
+                      color="warning"
+                      onClick={() => handleEditOpen(item)}
+                    >
                       <EditIcon />
                     </IconButton>
                   </td>

@@ -25,10 +25,47 @@ export const addProduct = createAsyncThunk('addProduct', async ({formValue, hand
     }
 })
 
+export const deleteProduct = createAsyncThunk("deleteProduct", async ({id}, {dispatch}) => {
+    try {
+        const response = await axios.delete(`http://localhost:8000/product/${id}`)
+        if(response.status === 200) {
+            console.log(response.data)
+            dispatch(fetchProduct());
+        }
+    } catch (error) {
+        console.log('error', error);
+    }
+})
+
+export const updateProduct = createAsyncThunk("updateProduct", async({formValue, editHandleClose}, {dispatch}) => {
+    try {
+
+        const {_id, name, qty, price, category} = formValue;
+
+        const id = _id;
+
+        const data = {
+            name, 
+            qty,
+            price,
+            category
+        }
+
+        const response = await axios.patch(`http://localhost:8000/product/${id}`, data)
+        if(response.status === 200) {
+            dispatch(fetchProduct());
+            dispatch(editHandleClose());
+        }
+    } catch (error) {
+        console.log("error", error);
+    }
+})
+
 const productSlice = createSlice({
     name: "product",
     initialState: {
         productList: [],
+        filterProductList: [],
         loading: true,
         addProductLoading: false,
         error: ""
@@ -45,6 +82,10 @@ const productSlice = createSlice({
         },
         emptyErrorMessage: (state, action) => {
             state.error = ""
+        },
+        searchProduct: (state, action) => {
+            const searchData = state.productList.filter((item) => item.name.toLowerCase().includes(action.payload.toLowerCase()))
+            state.filterProductList = searchData
         }
     }, 
     extraReducers: {
@@ -53,6 +94,7 @@ const productSlice = createSlice({
         },
         [fetchProduct.fulfilled]: (state, action) => {
             state.productList = action.payload.products
+            state.filterProductList = action.payload.products
             state.loading = false 
         },
         [fetchProduct.rejected]: (state, action) => {
@@ -61,6 +103,6 @@ const productSlice = createSlice({
     }
 })
 
-export const {startAddLoading, stopAddLoading, addErrorMessage, emptyErrorMessage} = productSlice.actions;
+export const {startAddLoading, stopAddLoading, addErrorMessage, emptyErrorMessage, searchProduct} = productSlice.actions;
 
 export default productSlice.reducer
