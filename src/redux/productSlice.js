@@ -84,7 +84,7 @@ const productSlice = createSlice({
             state.error = ""
         },
         searchProduct: (state, action) => {
-            const searchData = state.productList.filter((item) => item.name.toLowerCase().includes(action.payload.toLowerCase()))
+            const searchData = state.productList.filter((item) => item.name.toLowerCase().replace(" ", "").includes(action.payload.toLowerCase()))
             state.filterProductList = searchData
         }
     }, 

@@ -12,6 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import AddProductModel from "../component/AddProductModel";
 import EditProductModel from "../component/EditProductModel";
+import { styled } from "styled-components";
 
 function Products() {
   const dispatch = useDispatch();
@@ -47,9 +48,7 @@ function Products() {
   }, []);
 
   useEffect(() => {
-    if (searchText) {
-      dispatch(searchProduct(searchText));
-    }
+    dispatch(searchProduct(searchText));
   }, [searchText]);
 
   if (loading) {
@@ -87,6 +86,9 @@ function Products() {
         </Button>
         {/* <button className="btn btn-primary btn-sm">Add Product</button> */}
       </div>
+
+      <MainHeading>All Products.</MainHeading>
+      <SubHeading>All Products.</SubHeading>
 
       {/* ===================== TABLE =============================== */}
 
@@ -134,5 +136,15 @@ function Products() {
     </div>
   );
 }
+
+const MainHeading = styled.h1`
+  color: purple;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px black;
+`;
+
+const SubHeading = styled(MainHeading)`
+  font-size: 24px;
+`;
 
 export default Products;
